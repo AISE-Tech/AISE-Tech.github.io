@@ -1494,9 +1494,11 @@
         
         .partner-item {
             display: flex;
+            flex-direction: column; /* Asegura que la imagen y el nombre se apilen */
             justify-content: center;
             align-items: center;
-            height: 100px;
+            height: auto; /* Ajusta según el contenido */
+            text-align: center;
             filter: grayscale(100%);
             opacity: 0.7;
             transition: all 0.3s;
@@ -1511,6 +1513,11 @@
         .partner-item img {
             max-width: 100%;
             max-height: 80px;
+        }
+        .partner-name{
+            margin-top: 10px; /* Espacio entre la imagen y el nombre */
+            font-size: 16px;
+            font-weight: bold; 
         }
         
         /* Enhanced animations for scroll */
