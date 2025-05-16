@@ -1,0 +1,25 @@
+#robot-3d-section {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: white;
+}
+
+#robot-3d-container {
+    width: 100vw;
+    max-width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    background: #181c24;
+    border-top: 2px solid var(--primary, #00bcd4);
+    border-bottom: 2px solid var(--primary, #00bcd4);
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 600px) {
+    #robot-3d-container { height: 300px; }
+}
+
+

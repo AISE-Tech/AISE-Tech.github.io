@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/frontend/styles/styles.css">
+    <link rel="stylesheet" href="/frontend/styles/robot-3d.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
     <!-- Header Section -->
@@ -430,6 +434,12 @@
         </div>
     </section>
 
+    <!-- Chat Bot Section -->
+    <section id="robot-3d-section">
+        <h2>Visualización del Robot en 3D</h2>
+        <div id="robot-3d-container" data-model-url="assets/robot_model.glb"></div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contacto" class="contact">
         <div class="container">
@@ -511,7 +521,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>  
 
     <!-- Footer -->
     <footer>
@@ -519,8 +529,8 @@
             <div class="footer-content">
                 <div class="footer-column">
                     <a href="#" class="logo">
-                        <img src="/api/placeholder/150/50" alt="AISE Technology Logo">
-                        AISE <span style="color: var(--primary);">Technology</span>
+                        <img src="/frontend/assets/AISE LOGO BK.png" alt="AISE Technology Logo">
+                        <!--AISE <span style="color: var(--primary);">Technology</span>-->
                     </a>
                     <p style="color: rgba(255,255,255,0.7); margin-top: 20px;">Transformando ideas en soluciones digitales innovadoras desde 2010.</p>
                 </div>
@@ -560,56 +570,7 @@
     </footer>
 
     <!-- Scripts -->
-    <script>
-        // Script para manejar la navegación móvil
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileToggle = document.querySelector('.mobile-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            mobileToggle.addEventListener('click', function() {
-                navMenu.classList.toggle('active');
-                mobileToggle.classList.toggle('active');
-            });
-            
-            // Animaciones al hacer scroll
-            const fadeElements = document.querySelectorAll('.fade-in');
-            
-            function checkFade() {
-                fadeElements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    const elementVisible = 150;
-                    
-                    if (elementTop < window.innerHeight - elementVisible) {
-                        element.classList.add('active');
-                    }
-                });
-            }
-            
-            window.addEventListener('scroll', checkFade);
-            checkFade(); // Verificar elementos visibles al cargar la página
-            
-            // Enlaces de navegación suave
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Cerrar el menú móvil si está abierto
-                        navMenu.classList.remove('active');
-                        mobileToggle.classList.remove('active');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="scripts/robot-3d.js"></script>
+    <script src="scripts/navigation.js"></script>
 </body>
 </html>
