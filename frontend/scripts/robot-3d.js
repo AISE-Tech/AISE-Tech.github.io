@@ -18,62 +18,62 @@ let containerInstance = null;
 // Función para inicializar el visualizador 3D
 function initializeViewer(containerId) {
     console.log("Inicializando visualizador 3D");
-    
+
     // Limpiar animación previa si existe
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
-    
+
     // Verificar si el elemento contenedor existe
     const container = document.getElementById(containerId);
     if (!container) {
         console.error(`No se encontró el contenedor #${containerId}`);
         return;
     }
-    
+
     containerInstance = container;
-    
+
     // Verificar si THREE está disponible
     if (typeof THREE === 'undefined') {
         console.error("THREE.js no está cargado. Asegúrate de importar la biblioteca.");
         return;
     }
-    
+
     // Obtener URL del modelo desde el atributo data
     const MODEL_URL = container.dataset.modelUrl;
     console.log("URL del modelo:", MODEL_URL);
-    
+
     // Verificar si ya tenemos el renderer creado
     if (!rendererInstance) {
         // Configurar dimensiones
         const width = container.clientWidth;
         const height = container.clientHeight;
-        
+
         // Inicializar escena si no existe
         if (!sceneInstance) {
             sceneInstance = new THREE.Scene();
             sceneInstance.background = new THREE.Color(0xffffff);
-            
+
             // Añadir luces a la escena
             sceneInstance.add(new THREE.AmbientLight(0xffffff, 0.7));
             const dirLight = new THREE.DirectionalLight(0xffffff, 1);
             dirLight.position.set(5, 10, 7.5);
             sceneInstance.add(dirLight);
         }
-        
+
         // Configurar cámara si no existe
         if (!cameraInstance) {
             cameraInstance = new THREE.PerspectiveCamera(25, width / height, 0.1, 1000);
             cameraInstance.position.set(0, 0, 5);
         }
-        
+
         // Configurar renderer
         rendererInstance = new THREE.WebGLRenderer({ antialias: true });
         rendererInstance.setSize(width, height);
         rendererInstance.setPixelRatio(window.devicePixelRatio);
         container.appendChild(rendererInstance.domElement);
-        
+
         // Añadir controles OrbitControls si están disponibles
         if (typeof THREE.OrbitControls !== 'undefined') {
             controlsInstance = new THREE.OrbitControls(cameraInstance, rendererInstance.domElement);
@@ -82,14 +82,14 @@ function initializeViewer(containerId) {
             controlsInstance.dampingFactor = 0.05;
             controlsInstance.update();
         }
-        
+
         // Manejar redimensionamiento
         window.addEventListener('resize', handleResize);
     } else {
         // Si el renderer ya existe, simplemente lo añadimos al nuevo contenedor
         container.appendChild(rendererInstance.domElement);
     }
-    
+
     // Verificar si necesitamos cargar el modelo o usar el cache
     if (!cachedModel || cachedModelUrl !== MODEL_URL) {
         loadModel(MODEL_URL);
@@ -108,42 +108,42 @@ function loadModel(modelUrl) {
     try {
         const loader = new THREE.GLTFLoader();
         console.log("Intentando cargar el modelo desde:", modelUrl);
-        
+
         loader.load(
             modelUrl,
-            function(gltf) {
+            function (gltf) {
                 console.log("¡Modelo cargado exitosamente!");
-                
+
                 // Guardar en caché
                 cachedModel = gltf.scene;
                 cachedModelUrl = modelUrl;
-                
+
                 // Centrar y escalar el modelo
                 const box = new THREE.Box3().setFromObject(cachedModel);
                 const center = box.getCenter(new THREE.Vector3());
                 const size = box.getSize(new THREE.Vector3());
-                
+
                 const maxDim = Math.max(size.x, size.y, size.z);
                 const scale = 2 / maxDim;
                 cachedModel.scale.set(scale, scale, scale);
-                
+
                 cachedModel.position.x = -center.x * scale;
                 cachedModel.position.y = -center.y * scale;
                 cachedModel.position.z = -center.z * scale;
-                
+
                 // Añadir el modelo a la escena
                 sceneInstance.add(cachedModel);
                 console.log("Modelo añadido a la escena");
-                
+
                 startAnimation();
             },
-            function(xhr) {
+            function (xhr) {
                 const percent = xhr.loaded / xhr.total * 100;
                 console.log("Progreso de carga:", percent.toFixed(2) + "%");
             },
-            function(error) {
+            function (error) {
                 console.error("Error cargando el modelo:", error);
-                
+
                 // Mostrar mensaje de error en el contenedor
                 if (containerInstance) {
                     const errorMsg = document.createElement('div');
@@ -168,11 +168,11 @@ function loadModel(modelUrl) {
 // Función de animación
 function animate() {
     animationFrameId = requestAnimationFrame(animate);
-    
+
     if (controlsInstance) {
         controlsInstance.update();
     }
-    
+
     if (rendererInstance && sceneInstance && cameraInstance) {
         rendererInstance.render(sceneInstance, cameraInstance);
     }
@@ -190,7 +190,7 @@ function handleResize() {
     if (containerInstance && cameraInstance && rendererInstance) {
         const width = containerInstance.clientWidth;
         const height = containerInstance.clientHeight;
-        
+
         cameraInstance.aspect = width / height;
         cameraInstance.updateProjectionMatrix();
         rendererInstance.setSize(width, height);
@@ -204,20 +204,20 @@ function disposeViewer() {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
     }
-    
+
     // Quitar el event listener de resize
     window.removeEventListener('resize', handleResize);
-    
+
     // Eliminar renderer del DOM si existe
     if (rendererInstance && rendererInstance.domElement.parentNode) {
         rendererInstance.domElement.parentNode.removeChild(rendererInstance.domElement);
     }
-    
+
     // Nota: No limpiamos cachedModel porque queremos mantenerlo en caché
 }
 
 // Inicializar el visualizador cuando el DOM esté listo
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM cargado, iniciando visualizador 3D");
     // Inicializar automáticamente si existe el contenedor
     const container = document.getElementById('robot-3d-container');
@@ -234,7 +234,7 @@ window.Robot3DViewer = {
 
 // Manejar eventos de scroll y visibilidad para liberar recursos
 // cuando la sección no esté visible o la pestaña esté oculta
-document.addEventListener("scroll", function() {
+document.addEventListener("scroll", function () {
     const container = document.getElementById('robot-3d-container');
     const bounding = container.getBoundingClientRect();
 
@@ -245,7 +245,7 @@ document.addEventListener("scroll", function() {
 });
 
 // Manejar el evento de visibilidad de la pestaña
-document.addEventListener("visibilitychange", function() {
+document.addEventListener("visibilitychange", function () {
     if (document.hidden && renderer) {
         console.log("Liberando recursos WebGL...");
         renderer.dispose();

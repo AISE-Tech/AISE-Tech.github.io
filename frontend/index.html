@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
     <script src="scripts/robot-3d.js"></script>
 
 </head>
+
 <body>
     <!-- Header Section -->
     <header>
@@ -47,7 +49,8 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Conectando innovación, potenciando tu mundo</h1>
-                <p>Soluciones tecnológicas avanzadas que transforman negocios y crean nuevas oportunidades en la era digital.</p>
+                <p>Soluciones tecnológicas avanzadas que transforman negocios y crean nuevas oportunidades en la era
+                    digital.</p>
                 <div class="hero-buttons">
                     <a href="#servicios" class="btn-primary">Nuestros Servicios</a>
                     <a href="#contacto" class="btn-secondary">Contáctanos</a>
@@ -60,136 +63,56 @@
     <section id="robot-3d-section" style="padding: 60px 0; background: var(--background, #f7f9fb);">
         <div class="container" style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
             <!-- 3D Model -->
-            <div id="robot-3d-container" data-model-url="assets/robot_model.glb" style="flex: 1 1 320px; min-width: 320px; max-width: 480px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); padding: 24px; display: flex; align-items: center; justify-content: center;"></div>
-            
+            <div id="robot-3d-container" data-model-url="assets/robot_model.glb"
+                style="flex: 1 1 320px; min-width: 320px; max-width: 480px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); padding: 24px; display: flex; align-items: center; justify-content: center;">
+            </div>
+
             <!-- Chat UI -->
-            <div class="chatbot-ui" style="flex: 2 1 340px; min-width: 320px; max-width: 600px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); display: flex; flex-direction: column; height: 480px;">
-                <div class="chatbot-header" style="background: var(--primary, #0057b8); color: #fff; padding: 18px 24px; border-radius: 18px 18px 0 0; font-weight: 600; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
+            <div class="chatbot-ui"
+                style="flex: 2 1 340px; min-width: 320px; max-width: 600px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); display: flex; flex-direction: column; height: 480px;">
+                <div class="chatbot-header"
+                    style="background: var(--primary, #0057b8); color: #fff; padding: 18px 24px; border-radius: 18px 18px 0 0; font-weight: 600; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
                     <i class="fas fa-robot"></i> OptimusTech BOT
                 </div>
-                <div class="chatbot-messages" id="chatbot-messages" style="flex: 1; padding: 18px 24px; overflow-y: auto; background: #f7f9fb;">
-                    <div class="message bot" style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
-                        <div style="background: var(--primary, #0057b8); color: #fff; border-radius: 12px 12px 12px 0; padding: 10px 16px; max-width: 80%; font-size: 1rem;">
+                <div class="chatbot-messages" id="chatbot-messages"
+                    style="flex: 1; padding: 18px 24px; overflow-y: auto; background: #f7f9fb;">
+                    <div class="message bot"
+                        style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
+                        <div
+                            style="background: var(--primary, #0057b8); color: #fff; border-radius: 12px 12px 12px 0; padding: 10px 16px; max-width: 80%; font-size: 1rem;">
                             ¡Hola! Soy OptimusTech BOT 🤖<br>
                             ¿En qué puedo ayudarte hoy?
                         </div>
                     </div>
                 </div>
-                <form id="chatbot-form" style="display: flex; align-items: center; gap: 8px; padding: 16px 24px; border-top: 1px solid #e0e6ed; background: #fff;">
-                    <button type="button" id="chatbot-voice-btn" title="Hablar" style="background: var(--primary, #0057b8); border: none; color: #fff; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer;">
+                <form id="chatbot-form"
+                    style="display: flex; align-items: center; gap: 8px; padding: 16px 24px; border-top: 1px solid #e0e6ed; background: #fff;">
+                    <button type="button" id="chatbot-voice-btn" title="Hablar"
+                        style="background: var(--primary, #0057b8); border: none; color: #fff; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer;">
                         <i class="fas fa-microphone"></i>
                     </button>
-                    <input type="text" id="chatbot-input" placeholder="Escribe tu mensaje..." autocomplete="off" style="flex: 1; border: 1px solid #e0e6ed; border-radius: 8px; padding: 10px 14px; font-size: 1rem; outline: none;">
-                    <button type="submit" style="background: var(--primary, #0057b8); border: none; color: #fff; border-radius: 8px; padding: 10px 18px; font-weight: 600; font-size: 1rem; cursor: pointer;">
+                    <input type="text" id="chatbot-input" placeholder="Escribe tu mensaje..." autocomplete="off"
+                        style="flex: 1; border: 1px solid #e0e6ed; border-radius: 8px; padding: 10px 14px; font-size: 1rem; outline: none;">
+                    <button type="submit"
+                        style="background: var(--primary, #0057b8); border: none; color: #fff; border-radius: 8px; padding: 10px 18px; font-weight: 600; font-size: 1rem; cursor: pointer;">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
             </div>
         </div>
-        <style>
-            /* Responsive for chatbot section */
-            @media (max-width: 900px) {
-                #robot-3d-section .container {
-                    flex-direction: column;
-                    gap: 24px;
-                }
-                #robot-3d-container, .chatbot-ui {
-                    max-width: 100% !important;
-                }
-                .chatbot-ui { height: 400px; }
-            }
-            .chatbot-ui::-webkit-scrollbar, .chatbot-messages::-webkit-scrollbar {
-                width: 8px;
-                background: #e0e6ed;
-                border-radius: 8px;
-            }
-            .chatbot-ui::-webkit-scrollbar-thumb, .chatbot-messages::-webkit-scrollbar-thumb {
-                background: var(--primary, #0057b8);
-                border-radius: 8px;
-            }
-            .message.user > div {
-                background: var(--primary-light, #e6f0fa);
-                color: #222;
-                border-radius: 12px 12px 0 12px;
-                margin-left: auto;
-            }
-        </style>
-        <script>
-            // Simple chat UI logic
-            const chatbotForm = document.getElementById('chatbot-form');
-            const chatbotInput = document.getElementById('chatbot-input');
-            const chatbotMessages = document.getElementById('chatbot-messages');
-            const voiceBtn = document.getElementById('chatbot-voice-btn');
-            let recognizing = false;
-            let recognition;
-
-            // Add user message to chat
-            function addUserMessage(text) {
-                const msg = document.createElement('div');
-                msg.className = 'message user';
-                msg.style = 'margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px; justify-content: flex-end;';
-                msg.innerHTML = `<div style="background: var(--primary-light, #e6f0fa); color: #222; border-radius: 12px 12px 0 12px; padding: 10px 16px; max-width: 80%; font-size: 1rem;">${text}</div>`;
-                chatbotMessages.appendChild(msg);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            }
-
-            // Add bot message to chat (placeholder)
-            function addBotMessage(text) {
-                const msg = document.createElement('div');
-                msg.className = 'message bot';
-                msg.style = 'margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;';
-                msg.innerHTML = `<div style="background: var(--primary, #0057b8); color: #fff; border-radius: 12px 12px 12px 0; padding: 10px 16px; max-width: 80%; font-size: 1rem;">${text}</div>`;
-                chatbotMessages.appendChild(msg);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
-            }
-
-            chatbotForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const text = chatbotInput.value.trim();
-                if (!text) return;
-                addUserMessage(text);
-                chatbotInput.value = '';
-                // Placeholder bot response
-                setTimeout(() => addBotMessage('Gracias por tu mensaje. Pronto me conectaré con una IA para responderte.'), 700);
+        <!-- Import the ChatBot module -->
+        <script type="module">
+            import ChatBot from '/frontend/scripts/chatbot.js';
+            // Initialize the chatbot when the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', () => {
+                const chatbot = new ChatBot();
             });
-
-            // Voice recognition (Web Speech API)
-            if ('webkitSpeechRecognition' in window) {
-                recognition = new webkitSpeechRecognition();
-                recognition.lang = 'es-ES';
-                recognition.continuous = false;
-                recognition.interimResults = false;
-
-                recognition.onstart = function() {
-                    recognizing = true;
-                    voiceBtn.style.background = 'var(--primary-light, #e6f0fa)';
-                    voiceBtn.style.color = 'var(--primary, #0057b8)';
-                };
-                recognition.onend = function() {
-                    recognizing = false;
-                    voiceBtn.style.background = 'var(--primary, #0057b8)';
-                    voiceBtn.style.color = '#fff';
-                };
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    chatbotInput.value = transcript;
-                    chatbotInput.focus();
-                };
-                voiceBtn.addEventListener('click', function() {
-                    if (recognizing) {
-                        recognition.stop();
-                    } else {
-                        recognition.start();
-                    }
-                });
-            } else {
-                voiceBtn.disabled = true;
-                voiceBtn.title = "Tu navegador no soporta reconocimiento de voz";
-            }
         </script>
     </section>
 
-    <div id="debug-info" style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 10px; border-radius: 5px; font-family: monospace; z-index: 100; max-width: 80%; overflow: auto; color: white;"></div>    
+    <div id="debug-info"
+        style="position: absolute; bottom: 10px; left: 10px; background: rgba(0,0,0,0.7); padding: 10px; border-radius: 5px; font-family: monospace; z-index: 100; max-width: 80%; overflow: auto; color: white;">
+    </div>
 
     <!-- Services Section -->
     <section id="servicios" class="services">
@@ -197,7 +120,8 @@
         <div class="container">
             <div class="section-header fade-in">
                 <h2>Nuestros Servicios</h2>
-                <p>Ofrecemos soluciones tecnológicas integrales diseñadas para impulsar el crecimiento y la eficiencia de tu empresa.</p>
+                <p>Ofrecemos soluciones tecnológicas integrales diseñadas para impulsar el crecimiento y la eficiencia
+                    de tu empresa.</p>
             </div>
             <div class="services-grid">
                 <div class="service-card fade-in">
@@ -206,7 +130,8 @@
                     </div>
                     <div class="service-content">
                         <h3>Desarrollo de Software</h3>
-                        <p>Creamos aplicaciones personalizadas que se adaptan perfectamente a las necesidades específicas de tu negocio.</p>
+                        <p>Creamos aplicaciones personalizadas que se adaptan perfectamente a las necesidades
+                            específicas de tu negocio.</p>
                         <a href="#" class="service-link">Más información <span>→</span></a>
                     </div>
                 </div>
@@ -216,7 +141,8 @@
                     </div>
                     <div class="service-content">
                         <h3>Automatización Industrial</h3>
-                        <p>Optimizamos procesos industriales con automatización avanzada, integrando tecnología inteligente para mayor eficiencia, precisión y control en tiempo real.</p>
+                        <p>Optimizamos procesos industriales con automatización avanzada, integrando tecnología
+                            inteligente para mayor eficiencia, precisión y control en tiempo real.</p>
                         <a href="#" class="service-link">Más información <span>→</span></a>
                     </div>
                 </div>
@@ -236,7 +162,8 @@
                     </div>
                     <div class="service-content">
                         <h3>Analítica de Datos</h3>
-                        <p>Convierte tus datos en insights accionables que impulsen la toma de decisiones estratégicas.</p>
+                        <p>Convierte tus datos en insights accionables que impulsen la toma de decisiones estratégicas.
+                        </p>
                         <a href="#" class="service-link">Más información <span>→</span></a>
                     </div>
                 </div>
@@ -246,7 +173,8 @@
                     </div>
                     <div class="service-content">
                         <h3>Ciberseguridad</h3>
-                        <p>Protegemos tu información y sistemas con soluciones de seguridad avanzadas y actualizadas.</p>
+                        <p>Protegemos tu información y sistemas con soluciones de seguridad avanzadas y actualizadas.
+                        </p>
                         <a href="#" class="service-link">Más información <span>→</span></a>
                     </div>
                 </div>
@@ -256,7 +184,8 @@
                     </div>
                     <div class="service-content">
                         <h3>Inteligencia Artificial</h3>
-                        <p>Implementamos algoritmos de IA y machine learning para automatizar procesos y generar valor.</p>
+                        <p>Implementamos algoritmos de IA y machine learning para automatizar procesos y generar valor.
+                        </p>
                         <a href="#" class="service-link">Más información <span>→</span></a>
                     </div>
                 </div>
@@ -270,10 +199,16 @@
             <div class="about-content">
                 <div class="about-text fade-in">
                     <h2>Sobre AISE Technology</h2>
-                    <p>Fundada en 2024 por un equipo de Ingenieros en Electrónica y Automatización, AISE Technology se especializa en soluciones innovadoras en automatización, energía, electrónica, software, redes y domótica, impulsando la eficiencia y sostenibilidad en Ecuador.</p>
-                    <p>Nuestra misión es proporcionar tecnología integral y de alta calidad para mejorar el confort y la productividad de nuestros clientes, superando expectativas con creatividad y profesionalismo.</p>
-                    <p>Nos proyectamos como líderes en automatización, electrónica y domótica, contribuyendo a la transformación digital y la sostenibilidad energética del país.</p>
-                    <p>Desde nuestros inicios, promovemos la modernización tecnológica en sectores clave, consolidándonos como socios estratégicos para quienes buscan innovación y calidad.</p>
+                    <p>Fundada en 2024 por un equipo de Ingenieros en Electrónica y Automatización, AISE Technology se
+                        especializa en soluciones innovadoras en automatización, energía, electrónica, software, redes y
+                        domótica, impulsando la eficiencia y sostenibilidad en Ecuador.</p>
+                    <p>Nuestra misión es proporcionar tecnología integral y de alta calidad para mejorar el confort y la
+                        productividad de nuestros clientes, superando expectativas con creatividad y profesionalismo.
+                    </p>
+                    <p>Nos proyectamos como líderes en automatización, electrónica y domótica, contribuyendo a la
+                        transformación digital y la sostenibilidad energética del país.</p>
+                    <p>Desde nuestros inicios, promovemos la modernización tecnológica en sectores clave,
+                        consolidándonos como socios estratégicos para quienes buscan innovación y calidad.</p>
                     <div class="about-features">
                         <div class="feature">
                             <div class="feature-icon">
@@ -331,7 +266,8 @@
         <div class="container">
             <div class="section-header fade-in">
                 <h2>¿Por qué elegirnos?</h2>
-                <p>Nuestra combinación única de experiencia técnica, enfoque centrado en el cliente y pasión por la innovación nos diferencia.</p>
+                <p>Nuestra combinación única de experiencia técnica, enfoque centrado en el cliente y pasión por la
+                    innovación nos diferencia.</p>
             </div>
             <div class="highlights-container">
                 <div class="highlight-card fade-in">
@@ -339,21 +275,24 @@
                         <i class="fas fa-lightbulb"></i>
                     </div>
                     <h3 class="highlight-title">Soluciones Innovadoras</h3>
-                    <p class="highlight-description">Nos mantenemos a la vanguardia de las últimas tendencias tecnológicas para ofrecer soluciones innovadoras que marcan la diferencia.</p>
+                    <p class="highlight-description">Nos mantenemos a la vanguardia de las últimas tendencias
+                        tecnológicas para ofrecer soluciones innovadoras que marcan la diferencia.</p>
                 </div>
                 <div class="highlight-card fade-in">
                     <div class="highlight-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
                     <h3 class="highlight-title">Enfoque Colaborativo</h3>
-                    <p class="highlight-description">Trabajamos en estrecha colaboración con nuestros clientes, involucrándolos en cada etapa del proceso para garantizar resultados óptimos.</p>
+                    <p class="highlight-description">Trabajamos en estrecha colaboración con nuestros clientes,
+                        involucrándolos en cada etapa del proceso para garantizar resultados óptimos.</p>
                 </div>
                 <div class="highlight-card fade-in">
                     <div class="highlight-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
                     <h3 class="highlight-title">Entrega Rápida</h3>
-                    <p class="highlight-description">Nuestra metodología ágil nos permite entregar soluciones de alta calidad en plazos más cortos, permitiéndote llegar al mercado más rápido.</p>
+                    <p class="highlight-description">Nuestra metodología ágil nos permite entregar soluciones de alta
+                        calidad en plazos más cortos, permitiéndote llegar al mercado más rápido.</p>
                 </div>
             </div>
         </div>
@@ -365,7 +304,8 @@
         <div class="container">
             <div class="section-header fade-in">
                 <h2>Nuestros Proyectos</h2>
-                <p>Descubre cómo hemos ayudado a empresas de diferentes sectores a alcanzar sus objetivos tecnológicos.</p>
+                <p>Descubre cómo hemos ayudado a empresas de diferentes sectores a alcanzar sus objetivos tecnológicos.
+                </p>
             </div>
             <div class="projects-grid">
                 <div class="project-card fade-in">
@@ -387,7 +327,8 @@
                             <span class="project-tag">Edge AI</span>
                         </div>
                         <h3>Tracking Cámaras en Tiempo Real</h3>
-                        <p>Desarrollo e implementación de un sistema de video vigilancia inteligente implementando tracking en tiempo real y reconcimiento de movimientos bruscos</p>
+                        <p>Desarrollo e implementación de un sistema de video vigilancia inteligente implementando
+                            tracking en tiempo real y reconcimiento de movimientos bruscos</p>
                         <a href="#" class="project-link">Ver caso de éxito <span>→</span></a>
                     </div>
                 </div>
@@ -410,8 +351,10 @@
                             <span class="project-tag">Seguridad Industrial</span>
                         </div>
                         <h3>Automatización Sistema de Dosificación</h3>
-                        <p>Sitema automático para dosificar por pérdida de peso utilizando sistemas de bombeo con electroválvulas y sensores analógicos de peso.</p>
-                        <p>Integra una interfaz Humano-Máquina (HMI) para que los operadores puedan supervisar e interactuar con el sistema automático</p>
+                        <p>Sitema automático para dosificar por pérdida de peso utilizando sistemas de bombeo con
+                            electroválvulas y sensores analógicos de peso.</p>
+                        <p>Integra una interfaz Humano-Máquina (HMI) para que los operadores puedan supervisar e
+                            interactuar con el sistema automático</p>
                         <a href="#" class="project-link">Ver caso de éxito <span>→</span></a>
                     </div>
                 </div>
@@ -459,7 +402,8 @@
                         <h3 class="member-name">Ing. William Quispe</h3>
                         <p class="member-position">Director General</p>
                         <div class="member-social">
-                            <a href="https://www.linkedin.com/in/william-josu%C3%A9-quispe-865355a7/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.linkedin.com/in/william-josu%C3%A9-quispe-865355a7/" target="_blank"
+                                rel="noopener"><i class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-github"></i></a>
                         </div>
@@ -473,7 +417,8 @@
                         <h3 class="member-name">Ing. Jhylmar Subía</h3>
                         <p class="member-position">Director de Tecnología</p>
                         <div class="member-social">
-                            <a href="http://www.linkedin.com/in/jhylmar-subia-07aa92209"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="http://www.linkedin.com/in/jhylmar-subia-07aa92209"><i
+                                    class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-github"></i></a>
                         </div>
@@ -487,7 +432,8 @@
                         <h3 class="member-name">Ing. Ezequiel Gallardo</h3>
                         <p class="member-position">Jefe de Desarrollo</p>
                         <div class="member-social">
-                            <a href="https://www.linkedin.com/in/ezequiel-gallardo-1ab638292/"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.linkedin.com/in/ezequiel-gallardo-1ab638292/"><i
+                                    class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-github"></i></a>
                         </div>
@@ -515,7 +461,8 @@
                         <h3 class="member-name">Ing. Jairo Quilumbaquin</h3>
                         <p class="member-position">Desarrollador de Software</p>
                         <div class="member-social">
-                            <a href="https://www.linkedin.com/in/jairo-quilumbaquin-939098210/"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.linkedin.com/in/jairo-quilumbaquin-939098210/"><i
+                                    class="fab fa-linkedin-in"></i></a>
                             <a href="#"><i class="fab fa-twitter"></i></a>
                             <a href="#"><i class="fab fa-github"></i></a>
                         </div>
@@ -530,7 +477,8 @@
         <div class="container">
             <div class="cta-content fade-in">
                 <h2>Transforma tu negocio con soluciones tecnológicas a medida</h2>
-                <p>Descubre cómo podemos ayudarte a optimizar procesos, mejorar la experiencia de usuario y potenciar el crecimiento de tu empresa.</p>
+                <p>Descubre cómo podemos ayudarte a optimizar procesos, mejorar la experiencia de usuario y potenciar el
+                    crecimiento de tu empresa.</p>
                 <div class="cta-buttons">
                     <a href="#contacto" class="btn-primary">Contactar ahora</a>
                     <a href="#servicios" class="btn-secondary">Explorar servicios</a>
@@ -611,9 +559,11 @@
                     <div class="contact-social">
                         <h3>Síguenos</h3>
                         <div class="social-links">
-                            <a href="https://www.facebook.com/people/AISE-Technology/61566265505008/"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.facebook.com/people/AISE-Technology/61566265505008/"><i
+                                    class="fab fa-facebook-f"></i></a>
                             <a href="https://www.tiktok.com/@aisetechnology"><i class="fab fa-tiktok"></i></a>
-                            <a href="https://www.linkedin.com/company/aise-technology/posts/?feedView=all"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.linkedin.com/company/aise-technology/posts/?feedView=all"><i
+                                    class="fab fa-linkedin-in"></i></a>
                             <a href="https://www.instagram.com/aise_tech/"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>
@@ -645,14 +595,15 @@
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="privacy" required>
-                            <label class="form-check-label" for="privacy">Acepto la política de privacidad y el tratamiento de mis datos</label>
+                            <label class="form-check-label" for="privacy">Acepto la política de privacidad y el
+                                tratamiento de mis datos</label>
                         </div>
                         <button type="submit" class="btn-submit">Enviar Mensaje</button>
                     </form>
                 </div>
             </div>
         </div>
-    </section>  
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -663,7 +614,8 @@
                         <img src="/frontend/assets/AISE LOGO BK.png" alt="AISE Technology Logo">
                         <!--AISE <span style="color: var(--primary);">Technology</span>-->
                     </a>
-                    <p style="color: rgba(255,255,255,0.7); margin-top: 20px;">Transformando ideas en soluciones digitales innovadoras desde 2010.</p>
+                    <p style="color: rgba(255,255,255,0.7); margin-top: 20px;">Transformando ideas en soluciones
+                        digitales innovadoras desde 2010.</p>
                 </div>
                 <div class="footer-column">
                     <h3>Enlaces Rápidos</h3>
@@ -695,7 +647,8 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2025 AISE Technology. Todos los derechos reservados. | <a href="#">Política de Privacidad</a> | <a href="#">Términos de Servicio</a></p>
+                <p>&copy; 2025 AISE Technology. Todos los derechos reservados. | <a href="#">Política de Privacidad</a>
+                    | <a href="#">Términos de Servicio</a></p>
             </div>
         </div>
     </footer>
@@ -703,4 +656,5 @@
     <!-- Scripts -->
     <script src="scripts/navigation.js"></script>
 </body>
+
 </html>

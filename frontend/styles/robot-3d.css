@@ -6,24 +6,87 @@
 }
 
 #robot-3d-container {
-    width: 40%; /* Cambiado de 100vw a 80% */
-    max-width: auto; /* Establecer un ancho máximo */
+    width: 40%;
+    /* Cambiado de 100vw a 80% */
+    max-width: auto;
+    /* Establecer un ancho máximo */
     height: 500px;
-    margin-left: 0; /* Alinear el contenedor a la izquierda */
-    background: white;/*#181c24*/    
+    margin-left: 0;
+    /* Alinear el contenedor a la izquierda */
+    background: white;
+    /*#181c24*/
     border-top: 2px solid var(--primary, #00bcd4);
     border-bottom: 2px solid var(--primary, #00bcd4);
     box-sizing: border-box;
     position: relative;
     z-index: 1;
-    border-radius: 8px; /* Opcional: añade bordes redondeados */
-    overflow: hidden; /* Asegura que el contenido no sobresalga */
+    border-radius: 8px;
+    /* Opcional: añade bordes redondeados */
+    overflow: hidden;
+    /* Asegura que el contenido no sobresalga */
 }
 
 @media (max-width: 600px) {
-    #robot-3d-container { 
-        height: 300px; 
-        width: 95%; /* Más ancho en móviles */
+    #robot-3d-container {
+        height: 300px;
+        width: 95%;
+        /* Más ancho en móviles */
     }
 }
 
+/* ESTILOS CHATBOT */
+@media (max-width: 900px) {
+    #robot-3d-section .container {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    #robot-3d-container,
+    .chatbot-ui {
+        max-width: 100% !important;
+    }
+
+    .chatbot-ui {
+        height: 400px;
+    }
+}
+
+.chatbot-ui::-webkit-scrollbar,
+.chatbot-messages::-webkit-scrollbar {
+    width: 8px;
+    background: #e0e6ed;
+    border-radius: 8px;
+}
+
+.chatbot-ui::-webkit-scrollbar-thumb,
+.chatbot-messages::-webkit-scrollbar-thumb {
+    background: var(--primary, #0057b8);
+    border-radius: 8px;
+}
+
+/* Chatbot message styles (movidos desde styles.css) */
+.message {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.message.user {
+  justify-content: flex-end;
+}
+.message-bubble {
+  max-width: 80%;
+  font-size: 1rem;
+  padding: 10px 16px;
+  border-radius: 12px;
+}
+.message.user .message-bubble {
+  background: var(--primary-light, #e6f0fa);
+  color: #222;
+  border-radius: 12px 12px 0 12px;
+}
+.message.bot .message-bubble {
+  background: var(--primary, #0057b8);
+  color: #fff;
+  border-radius: 12px 12px 12px 0;
+}
