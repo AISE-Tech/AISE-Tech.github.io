@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Visualización Robot 3D</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: white;
+        }
+        
+        #robot-3d-section {
+            text-align: center;
+            padding: 20px;
+            background: #222;
+            color: white;
+        }
+        
+        #robot-3d-container {
+            width: 100vw;
+            max-width: 100%;
+            height: 500px;
+            margin: 0 auto;
+            background: #181c24;
+            border-top: 2px solid #00bcd4;
+            border-bottom: 2px solid #00bcd4;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @media (max-width: 600px) {
+            #robot-3d-container { height: 300px; }
+        }
+        
+        #debug-info {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            z-index: 100;
+            max-width: 80%;
+            overflow: auto;
+        }
+    </style>
+    
+    <!-- Importación de bibliotecas Three.js en el head -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.0/examples/js/loaders/GLTFLoader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+<body>
+    <!-- Sección del robot 3D -->
+    <section id="robot-3d-section">
+        <h2>Visualización del Robot en 3D</h2>
+        <div id="robot-3d-container" data-model-url="robot_model.glb"></div>
+        <div id="debug-info"></div>
+    </section>
+
+    <!-- Script para la visualización del robot -->
+    <script>
+        // Función para mostrar información de depuración
+        function logDebug(message) {
+            const debugElement = document.getElementById('debug-info');
+            if (debugElement) {
+                const time = new Date().toLocaleTimeString();
+                debugElement.innerHTML += `<div>[${time}] ${message}</div>`;
+                console.log(message);
+            }
+        }
+
+        // Función para comprobar si THREE está disponible
+        function checkThreeJS() {
+            if (typeof THREE === 'undefined') {
+                logDebug("❌ ERROR: THREE.js no está cargado correctamente");
+                return false;
+            } else {
+                logDebug("✅ THREE.js cargado correctamente (versión: " + THREE.REVISION + ")");
+                
+                if (typeof THREE.GLTFLoader === 'undefined') {
+                    logDebug("❌ ERROR: GLTFLoader no está disponible");
+                    return false;
+                } else {
+                    logDebug("✅ GLTFLoader disponible");
+                }
+                
+                if (typeof THREE.OrbitControls === 'undefined') {
+                    logDebug("❌ ERROR: OrbitControls no está disponible");
+                    return false;
+                } else {
+                    logDebug("✅ OrbitControls disponible");
+                }
+                
+                return true;
+            }
+        }
+
+        // Función principal de inicialización
+        function init3DViewer() {
+            logDebug("🔄 Iniciando configuración de visualizador 3D...");
+            
+            // Comprobar THREE.js
+            if (!checkThreeJS()) {
+                return;
+            }
+            
+            const container = document.getElementById('robot-3d-container');
+            if (!container) {
+                logDebug("❌ ERROR: No se encontró el contenedor #robot-3d-container");
+                return;
+            }
+            
+            // Obtener URL del modelo
+            const MODEL_URL = container.dataset.modelUrl;
+            logDebug("📁 URL del modelo: " + MODEL_URL);
+            
+            // Crear escena
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x181c24);
+            logDebug("✅ Escena creada");
+            
+            // Configurar dimensiones
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            logDebug(`📏 Dimensiones: ${width}x${height}`);
+            
+            // Configurar cámara
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 2, 5);
+            logDebug("✅ Cámara configurada");
+            
+            // Configurar renderer
+            const renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+            logDebug("✅ Renderer creado y añadido al DOM");
+            
+            // Añadir controles
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.target.set(0, 0, 0);
+            controls.update();
+            logDebug("✅ Controles de cámara añadidos");
+            
+            // Añadir luces
+            scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 10, 7.5);
+            scene.add(dirLight);
+            logDebug("✅ Luces añadidas a la escena");
+            
+            // Añadir rejilla para referencia visual
+            const gridHelper = new THREE.GridHelper(10, 10);
+            scene.add(gridHelper);
+            logDebug("✅ Rejilla de ayuda añadida");
+            
+            // Crear un cubo pequeño para referencia visual inmediata
+            const cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00bcd4, wireframe: true });
+            const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            scene.add(cube);
+            logDebug("✅ Cubo de referencia añadido");
+            
+            // Función de animación
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.y += 0.01;
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            
+            // Iniciar animación
+            animate();
+            logDebug("✅ Animación iniciada");
+            
+            // Cargar modelo 3D
+            logDebug("🔄 Intentando cargar modelo desde: " + MODEL_URL);
+            
+            try {
+                const loader = new THREE.GLTFLoader();
+                
+                loader.load(
+                    MODEL_URL,
+                    function(gltf) {
+                        logDebug("✅ Modelo cargado correctamente");
+                        const model = gltf.scene;
+                        
+                        // Centrar y escalar el modelo
+                        const box = new THREE.Box3().setFromObject(model);
+                        const center = box.getCenter(new THREE.Vector3());
+                        const size = box.getSize(new THREE.Vector3());
+                        
+                        const maxDim = Math.max(size.x, size.y, size.z);
+                        const scale = 2 / maxDim;
+                        model.scale.set(scale, scale, scale);
+                        
+                        model.position.x = -center.x * scale;
+                        model.position.y = -center.y * scale;
+                        model.position.z = -center.z * scale;
+                        
+                        // Remover el cubo de referencia cuando el modelo está cargado
+                        scene.remove(cube);
+                        
+                        // Añadir el modelo a la escena
+                        scene.add(model);
+                        logDebug("✅ Modelo añadido a la escena");
+                    },
+                    function(xhr) {
+                        const percent = xhr.loaded / xhr.total * 100;
+                        logDebug(`🔄 Cargando: ${percent.toFixed(2)}%`);
+                    },
+                    function(error) {
+                        logDebug("❌ ERROR cargando el modelo: " + error.message);
+                        // El cubo azul permanecerá visible como referencia si el modelo no carga
+                    }
+                );
+            } catch (error) {
+                logDebug("❌ ERROR al crear loader: " + error.message);
+            }
+            
+            // Manejar redimensionamiento
+            window.addEventListener('resize', function() {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+                logDebug(`📏 Redimensionado a: ${w}x${h}`);
+            });
+        }
+
+        // Ejecutar cuando el DOM esté listo
+        document.addEventListener("DOMContentLoaded", function() {
+            logDebug("🚀 DOM cargado, iniciando visualizador 3D");
+            init3DViewer();
+        });
+    </script>
+</body>
+</html>
