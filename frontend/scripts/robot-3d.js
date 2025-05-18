@@ -232,6 +232,8 @@ window.Robot3DViewer = {
     dispose: disposeViewer
 };
 
+// Manejar eventos de scroll y visibilidad para liberar recursos
+// cuando la sección no esté visible o la pestaña esté oculta
 document.addEventListener("scroll", function() {
     const container = document.getElementById('robot-3d-container');
     const bounding = container.getBoundingClientRect();
@@ -242,6 +244,7 @@ document.addEventListener("scroll", function() {
     }
 });
 
+// Manejar el evento de visibilidad de la pestaña
 document.addEventListener("visibilitychange", function() {
     if (document.hidden && renderer) {
         console.log("Liberando recursos WebGL...");
