@@ -1,6 +1,5 @@
 /**
- * Script para visualizar un modelo 3D con Three.js
- * robot3d.js - Versión corregida
+ * Script actualizado para visualizar un modelo 3D sin cuadrícula
  */
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -16,34 +15,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Verificar si THREE está disponible
     if (typeof THREE === 'undefined') {
         console.error("THREE.js no está cargado. Asegúrate de importar la biblioteca.");
-        const errorMsg = document.createElement('div');
-        errorMsg.style.position = 'absolute';
-        errorMsg.style.top = '50%';
-        errorMsg.style.left = '50%';
-        errorMsg.style.transform = 'translate(-50%, -50%)';
-        errorMsg.style.color = 'white';
-        errorMsg.style.backgroundColor = 'rgba(255,0,0,0.5)';
-        errorMsg.style.padding = '10px';
-        errorMsg.style.borderRadius = '5px';
-        errorMsg.textContent = 'Error: THREE.js no está disponible';
-        container.appendChild(errorMsg);
-        return;
-    }
-    
-    // Verificar si GLTFLoader está disponible
-    if (typeof THREE.GLTFLoader === 'undefined') {
-        console.error("GLTFLoader no está disponible");
-        const errorMsg = document.createElement('div');
-        errorMsg.style.position = 'absolute';
-        errorMsg.style.top = '50%';
-        errorMsg.style.left = '50%';
-        errorMsg.style.transform = 'translate(-50%, -50%)';
-        errorMsg.style.color = 'white';
-        errorMsg.style.backgroundColor = 'rgba(255,0,0,0.5)';
-        errorMsg.style.padding = '10px';
-        errorMsg.style.borderRadius = '5px';
-        errorMsg.textContent = 'Error: GLTFLoader no está disponible';
-        container.appendChild(errorMsg);
         return;
     }
     
@@ -52,20 +23,19 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log("URL del modelo:", MODEL_URL);
     
     // Variables para Three.js
-    let scene, camera, renderer, controls;
+    let scene, camera, renderer, controls, model;
     
     // Inicializar escena
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x181c24);
+    scene.background = new THREE.Color(0xffffff);
     
     // Configurar dimensiones
     const width = container.clientWidth;
     const height = container.clientHeight;
-    console.log("Dimensiones del contenedor:", width, "x", height);
     
     // Configurar cámara
-    camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 2, 5);
+    camera = new THREE.PerspectiveCamera(25, width / height, 0.1, 1000);
+    camera.position.set(0, 0, 5);
     
     // Configurar renderer
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -73,44 +43,28 @@ document.addEventListener("DOMContentLoaded", function() {
     renderer.setPixelRatio(window.devicePixelRatio);
     container.appendChild(renderer.domElement);
     
-    // Verificar si el canvas se creó correctamente
-    const canvas = container.querySelector('canvas');
-    if (!canvas) {
-        console.error("No se pudo crear el canvas de WebGL");
-        return;
-    }
-    console.log("Canvas WebGL creado correctamente");
-    
     // Añadir controles OrbitControls si están disponibles
     if (typeof THREE.OrbitControls !== 'undefined') {
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 0, 0);
+        controls.enableDamping = true; // Animación más suave
+        controls.dampingFactor = 0.05;
         controls.update();
-    } else {
-        console.warn("OrbitControls no está disponible");
     }
     
     // Añadir luces
     scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 1);
     dirLight.position.set(5, 10, 7.5);
     scene.add(dirLight);
     
-    // Añadir rejilla para referencia visual
-    const gridHelper = new THREE.GridHelper(10, 10);
-    scene.add(gridHelper);
-    
-    // Añadir un cubo temporal como referencia visual
-    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00bcd4, wireframe: true });
-    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    scene.add(cube);
-    console.log("Cubo de referencia añadido a la escena");
     
     // Función de animación
     function animate() {
         requestAnimationFrame(animate);
-        cube.rotation.y += 0.01;
+        /*if (model) {
+            model.rotation.y += 0.005; // Rotación lenta del modelo
+        }*/
         if (controls) controls.update();
         renderer.render(scene, camera);
     }
@@ -127,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
             MODEL_URL,
             function(gltf) {
                 console.log("¡Modelo cargado exitosamente!");
-                const model = gltf.scene;
+                model = gltf.scene;
                 
                 // Centrar y escalar el modelo
                 const box = new THREE.Box3().setFromObject(model);
@@ -141,9 +95,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 model.position.x = -center.x * scale;
                 model.position.y = -center.y * scale;
                 model.position.z = -center.z * scale;
-                
-                // Remover el cubo de referencia
-                scene.remove(cube);
                 
                 // Añadir el modelo a la escena
                 scene.add(model);
@@ -168,8 +119,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 errorMsg.style.borderRadius = '5px';
                 errorMsg.textContent = 'Error cargando el modelo 3D: ' + error.message;
                 container.appendChild(errorMsg);
-                
-                // El cubo permanecerá visible como referencia
             }
         );
     } catch (error) {
@@ -185,12 +134,3 @@ document.addEventListener("DOMContentLoaded", function() {
         renderer.setSize(w, h);
     });
 });
-
-function logDebug(message) {
-    const debugElement = document.getElementById('debug-info');
-    if (debugElement) {
-        const time = new Date().toLocaleTimeString();
-        debugElement.innerHTML += `<div>[${time}] ${message}</div>`;
-        console.log(message);
-    }
-}

@@ -1,25 +1,29 @@
 #robot-3d-section {
     text-align: center;
     padding: 20px;
-    background: #222;
+    background: #a32e20;
     color: white;
 }
 
 #robot-3d-container {
-    width: 100vw;
-    max-width: 100%;
+    width: 40%; /* Cambiado de 100vw a 80% */
+    max-width: auto; /* Establecer un ancho máximo */
     height: 500px;
-    margin: 0 auto;
-    background: #181c24;
+    margin: 0 auto; /* Centrar el contenedor */
+    background: white;/*#181c24*/    
     border-top: 2px solid var(--primary, #00bcd4);
     border-bottom: 2px solid var(--primary, #00bcd4);
     box-sizing: border-box;
     position: relative;
     z-index: 1;
+    border-radius: 8px; /* Opcional: añade bordes redondeados */
+    overflow: hidden; /* Asegura que el contenido no sobresalga */
 }
 
 @media (max-width: 600px) {
-    #robot-3d-container { height: 300px; }
+    #robot-3d-container { 
+        height: 300px; 
+        width: 95%; /* Más ancho en móviles */
+    }
 }
-
 
