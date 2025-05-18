@@ -1,5 +1,5 @@
 #robot-3d-section {
-    text-align: center;
+    text-align: left;
     padding: 20px;
     background: #a32e20;
     color: white;
@@ -9,7 +9,7 @@
     width: 40%; /* Cambiado de 100vw a 80% */
     max-width: auto; /* Establecer un ancho máximo */
     height: 500px;
-    margin: 0 auto; /* Centrar el contenedor */
+    margin-left: 0; /* Alinear el contenedor a la izquierda */
     background: white;/*#181c24*/    
     border-top: 2px solid var(--primary, #00bcd4);
     border-bottom: 2px solid var(--primary, #00bcd4);
