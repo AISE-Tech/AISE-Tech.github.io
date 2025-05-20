@@ -54,7 +54,7 @@
         
         .logo {
             font-weight: bold;
-            font-size: 24px;
+            font-size: 18px;
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -62,7 +62,7 @@
         }
         
         .logo img {
-            height: 110px;
+            height: 80px;
             margin-right: 20px;
         }
         
