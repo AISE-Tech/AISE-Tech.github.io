@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AISE Technology | Conectando innovación, potenciando tu mundo</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>AISE Technology | Conectando innovación, potenciando tu mundo</title>    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="/frontend/styles/styles.css">
     <link rel="stylesheet" href="/frontend/styles/robot-3d.css">
+    <link rel="stylesheet" href="/frontend/styles/chat-ai.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r132/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.0/examples/js/loaders/GLTFLoader.min.js"></script>
@@ -69,18 +69,16 @@
 
             <!-- Chat UI -->
             <div class="chatbot-ui"
-                style="flex: 2 1 340px; min-width: 320px; max-width: 600px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); display: flex; flex-direction: column; height: 480px;">
-                <div class="chatbot-header"
+                style="flex: 2 1 340px; min-width: 320px; max-width: 600px; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); display: flex; flex-direction: column; height: 480px;">                <div class="chatbot-header"
                     style="background: var(--primary, #0057b8); color: #fff; padding: 18px 24px; border-radius: 18px 18px 0 0; font-weight: 600; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-robot"></i> OptimusTech BOT
+                    <i class="fas fa-robot"></i> AISE IA Assistant
                 </div>
                 <div class="chatbot-messages" id="chatbot-messages"
                     style="flex: 1; padding: 18px 24px; overflow-y: auto; background: #f7f9fb;">
                     <div class="message bot"
                         style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
-                        <div
-                            style="background: var(--primary, #0057b8); color: #fff; border-radius: 12px 12px 12px 0; padding: 10px 16px; max-width: 80%; font-size: 1rem;">
-                            ¡Hola! Soy OptimusTech BOT 🤖<br>
+                        <div class="message-bubble">
+                            ¡Hola! Soy el asistente de IA de AISE Technology 🤖<br>
                             ¿En qué puedo ayudarte hoy?
                         </div>
                     </div>

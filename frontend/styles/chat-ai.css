@@ -1,0 +1,88 @@
+/* Estilos para el chat con IA */
+
+/* Indicador de escritura */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 8px 16px;
+    background-color: var(--gray-light);
+    border-radius: 18px;
+    width: fit-content;
+    margin-left: 10px;
+}
+
+.typing-indicator.hidden {
+    display: none;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    margin: 0 1px;
+    background-color: var(--gray-medium);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Mensajes del sistema y errores */
+.message.system .message-bubble.system {
+    background-color: var(--gray-light);
+    color: var(--gray-medium);
+    font-style: italic;
+    text-align: center;
+    margin: 5px auto;
+    max-width: 80%;
+    font-size: 0.9em;
+}
+
+.message.error .message-bubble.error {
+    background-color: #ffdddd;
+    color: #d32f2f;
+    border: 1px solid #f5c6cb;
+    font-size: 0.9em;
+}
+
+/* Formateo de texto en mensajes */
+.message-bubble code {
+    font-family: monospace;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.message-bubble a {
+    color: var(--primary);
+    text-decoration: underline;
+    word-break: break-all;
+}
+
+.message-bubble a:hover {
+    color: var(--primary-dark);
+}
