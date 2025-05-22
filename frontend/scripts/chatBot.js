@@ -238,8 +238,7 @@ class ChatBot {
             this.showSystemMessage('No se pudo conectar al servidor. Por favor, recarga la página.');
         }
     }
-    
-    /**
+      /**
      * Handle WebSocket error
      */    handleSocketError(error) {
         console.error('Error en la conexión WebSocket:', error);
@@ -250,6 +249,14 @@ class ChatBot {
         console.error('- URL: ' + this.socket.url);
         console.error('- Estado actual: ' + this.socket.readyState);
         console.error('- Intentos de reconexión: ' + this.reconnectAttempts);
+        
+        // Intentar reconectar automáticamente después de un tiempo
+        if (this.reconnectAttempts < this.maxReconnectAttempts) {
+            setTimeout(() => {
+                console.log(`Intento de reconexión ${this.reconnectAttempts + 1} de ${this.maxReconnectAttempts}`);
+                this.connectToWebSocket();
+            }, Math.min(1000 * Math.pow(2, this.reconnectAttempts), 30000)); // Backoff exponencial con máximo de 30 segundos
+        }
     }
     
     /**

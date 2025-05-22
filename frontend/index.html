@@ -97,14 +97,18 @@
                     </button>
                 </form>
             </div>
-        </div>
-        <!-- Import the ChatBot module -->
+        </div>        <!-- Import the ChatBot module -->
         <script type="module">
-            import ChatBot from '/frontend/scripts/chatbot.js';
-            // Initialize the chatbot when the DOM is fully loaded
-            document.addEventListener('DOMContentLoaded', () => {
-                const chatbot = new ChatBot();
-            });
+            // Verificar si no ya ha sido iniciado por el aiseScriptsLoader
+            if (typeof window.aiChatBot === 'undefined') {
+                try {
+                    const ChatBot = await import('/frontend/scripts/chatBot.js').then(module => module.default);
+                    console.log('Inicializando chatbot directamente desde HTML');
+                    window.aiChatBot = new ChatBot();
+                } catch (error) {
+                    console.error('Error al cargar el chatbot:', error);
+                }
+            }
         </script>
     </section>
 
@@ -649,10 +653,11 @@
                     | <a href="#">Términos de Servicio</a></p>
             </div>
         </div>
-    </footer>
-
-    <!-- Scripts -->
+    </footer>    <!-- Scripts -->
     <script src="scripts/navigation.js"></script>
+    
+    <!-- Script loader que maneja la carga de versiones normales u ofuscadas -->
+    <script type="module" src="/frontend/scripts/aiseScriptsLoader.js"></script>
 </body>
 
 </html>
