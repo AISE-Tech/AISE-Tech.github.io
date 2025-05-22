@@ -14,6 +14,8 @@ AISE-Tech.github.io/
 ├── README.md                  # Este archivo
 ├── README-ASISTENTE-IA.md     # Documentación del asistente IA
 ├── .env                       # Variables de entorno (no incluido en el repositorio)
+├── .env.example               # Plantilla de variables de entorno (sin claves reales)
+├── .gitignore                 # Archivos y directorios ignorados por git
 ├── backend/                   # Servidor Node.js
 │   ├── package.json           # Dependencias del backend
 │   └── server.js              # Servidor Express y WebSocket
@@ -76,6 +78,15 @@ AISE-Tech.github.io/
    ```bash
    git clone https://github.com/AISE-Tech/AISE-Tech.github.io.git
    cd AISE-Tech.github.io
+   ```
+
+2. **Configurar variables de entorno**:
+   ```bash
+   # Copiar el archivo de ejemplo
+   cp .env.example .env
+   
+   # Editar el archivo .env y agregar tus claves API
+   # IMPORTANTE: Nunca subas tu archivo .env al repositorio
    ```
 
 2. **Configurar variables de entorno**:
