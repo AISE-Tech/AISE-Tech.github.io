@@ -308,6 +308,36 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Ruta de debug para mostrar estado detallado del servidor
+app.get('/api/debug', (req, res) => {
+  const clientsList = Array.from(clients).map(client => ({
+    id: client.clientId,
+    ip: client._socket?.remoteAddress || 'unknown'
+  }));
+  
+  const conversationStats = [];
+  for (const [id, convo] of conversations.entries()) {
+    conversationStats.push({
+      clientId: id,
+      messagesCount: convo.history ? convo.history.length : 0
+    });
+  }
+  
+  res.json({
+    serverInfo: {
+      port: PORT,
+      environment: NODE_ENV,
+      uptime: process.uptime(),
+      wsPath: process.env.WS_PATH || '/ws'
+    },
+    connections: {
+      active: clients.size,
+      clients: clientsList
+    },
+    conversations: conversationStats
+  });
+});
+
 // Iniciar servidor
 server.on('error', (error) => {
   if (error.code === 'EADDRINUSE') {
