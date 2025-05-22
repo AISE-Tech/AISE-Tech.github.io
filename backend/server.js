@@ -1,7 +1,7 @@
-require('dotenv').config({ path: '../.env' });
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 const express = require('express');
 const http = require('http');
-const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
 const { Server } = require('ws');
@@ -291,12 +291,8 @@ app.get('/scripts/:filename', (req, res, next) => {
   }
 });
 
-// Iniciar servidor
-server.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
-  console.log(`WebSocket disponible en ws://localhost:${PORT}${process.env.WS_PATH || '/ws'}`);
-  console.log(`Modo: ${NODE_ENV}`);
-});
+// Iniciar servidor (comentado para evitar doble inicialización)
+// Esta sección se ha movido abajo, después de agregar el manejador de errores
 
 // Ruta para verificar el estado del servidor
 app.get('/api/health', (req, res) => {
@@ -308,8 +304,19 @@ app.get('/api/health', (req, res) => {
 });
 
 // Iniciar servidor
+server.on('error', (error) => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Error: El puerto ${PORT} ya está en uso. Intente con otro puerto o detenga el proceso que esté usando este puerto.`);
+  } else {
+    console.error(`Error al iniciar el servidor:`, error);
+  }
+  process.exit(1);
+});
+
+// Iniciar servidor
 server.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
   console.log(`WebSocket disponible en ws://localhost:${PORT}${process.env.WS_PATH || '/ws'}`);
+  console.log(`Modo: ${NODE_ENV}`);
 });
 
