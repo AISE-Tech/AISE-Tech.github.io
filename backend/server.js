@@ -23,9 +23,12 @@ app.use(express.static(frontendPath));
 
 // Crear servidor HTTP y WebSocket
 const server = http.createServer(app);
-const wss = new Server({ server, path: process.env.WS_PATH || '/ws' });
+const wsPath = process.env.WS_PATH || '/ws';
+console.log(`Configurando WebSocket en la ruta: ${wsPath}`);
+const wss = new Server({ server, path: wsPath });
 
 // Inicializar Gemini AI
+console.log(`Inicializando Gemini AI con API Key${process.env.GEMINI_API_KEY ? ' (configurada)' : ' (no configurada)'}`);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 // Estado de las conexiones y conversaciones
@@ -99,7 +102,9 @@ wss.on('connection', async (ws, req) => {
   
   // Registrar cliente nuevo
   clients.add(ws);
-  console.log(`Cliente ${clientId} conectado. Total: ${clients.size}`);
+  console.log(`WebSocket: Cliente ${clientId} conectado desde ${req.socket.remoteAddress}`);
+  console.log(`Total de clientes conectados: ${clients.size}`);
+  console.log(`Headers de conexión: ${JSON.stringify(req.headers)}`);
   
   // Inicializar el chat con Gemini para este cliente
   try {

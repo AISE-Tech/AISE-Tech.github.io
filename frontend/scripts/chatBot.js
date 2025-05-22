@@ -135,11 +135,11 @@ class ChatBot {
 
     /**
      * Connect to the WebSocket server
-     */
-    connectToWebSocket() {        // Determine the WebSocket URL based on the current page location
+     */    connectToWebSocket() {        // Determine the WebSocket URL based on the current page location
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const host = window.location.hostname === '' ? 'localhost:8080' : window.location.host;
         const wsUrl = `${protocol}//${host}/ws`;
+        console.log('Intentando conectar al WebSocket en:', wsUrl);
         
         this.socket = new WebSocket(wsUrl);
         
@@ -152,9 +152,9 @@ class ChatBot {
     
     /**
      * Handle WebSocket connection open
-     */
-    handleSocketOpen() {
-        console.log('Conexión WebSocket establecida');
+     */    handleSocketOpen() {
+        console.log('Conexión WebSocket establecida correctamente');
+        console.log('URL de conexión:', this.socket.url);
         this.isConnected = true;
         this.reconnectAttempts = 0;
         
@@ -242,9 +242,15 @@ class ChatBot {
     
     /**
      * Handle WebSocket error
-     */
-    handleSocketError(error) {
+     */    handleSocketError(error) {
         console.error('Error en la conexión WebSocket:', error);
+        this.showErrorMessage('Error de conexión al servidor. Intentando reconectar...');
+        
+        // Log connection details for debugging
+        console.error('Detalles de conexión WebSocket:');
+        console.error('- URL: ' + this.socket.url);
+        console.error('- Estado actual: ' + this.socket.readyState);
+        console.error('- Intentos de reconexión: ' + this.reconnectAttempts);
     }
     
     /**
