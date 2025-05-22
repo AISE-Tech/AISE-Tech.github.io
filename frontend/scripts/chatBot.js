@@ -136,10 +136,9 @@ class ChatBot {
     /**
      * Connect to the WebSocket server
      */
-    connectToWebSocket() {
-        // Determine the WebSocket URL based on the current page location
+    connectToWebSocket() {        // Determine the WebSocket URL based on the current page location
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const host = window.location.hostname === '' ? 'localhost:3000' : window.location.host;
+        const host = window.location.hostname === '' ? 'localhost:8080' : window.location.host;
         const wsUrl = `${protocol}//${host}/ws`;
         
         this.socket = new WebSocket(wsUrl);
