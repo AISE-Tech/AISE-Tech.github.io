@@ -102,9 +102,13 @@
             // Verificar si no ya ha sido iniciado por el aiseScriptsLoader
             if (typeof window.aiChatBot === 'undefined') {
                 try {
-                    const ChatBot = await import('/frontend/scripts/chatBot.js').then(module => module.default);
-                    console.log('Inicializando chatbot directamente desde HTML');
-                    window.aiChatBot = new ChatBot();
+                    import('/frontend/scripts/chatBot.js').then(module => {
+                        const ChatBot = module.default;
+                        console.log('Inicializando chatbot directamente desde HTML');
+                        window.aiChatBot = new ChatBot();
+                    }).catch(error => {
+                        console.error('Error al cargar el chatbot:', error);
+                    });
                 } catch (error) {
                     console.error('Error al cargar el chatbot:', error);
                 }

@@ -9,7 +9,11 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // Configuración de Express
 const app = express();
-const PORT = process.env.PORT || 3000;
+
+// Definir puertos alternativos para evitar conflictos
+const PREFERRED_PORTS = [9001, 9002, 9003, 9004, 9005];
+let portIndex = 0;
+let PORT = process.env.PORT || PREFERRED_PORTS[portIndex];
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const isProd = NODE_ENV === 'production';
 
@@ -338,20 +342,40 @@ app.get('/api/debug', (req, res) => {
   });
 });
 
-// Iniciar servidor
-server.on('error', (error) => {
-  if (error.code === 'EADDRINUSE') {
-    console.error(`Error: El puerto ${PORT} ya está en uso. Intente con otro puerto o detenga el proceso que esté usando este puerto.`);
-  } else {
-    console.error(`Error al iniciar el servidor:`, error);
-  }
-  process.exit(1);
-});
+// Función para intentar iniciar el servidor en diferentes puertos
+function startServer() {
+  console.log(`Intentando iniciar servidor en puerto ${PORT}...`);
+  
+  server.on('error', (error) => {
+    if (error.code === 'EADDRINUSE') {
+      console.warn(`Puerto ${PORT} ya está en uso. Intentando con puerto alternativo...`);
+      portIndex++;
+      
+      if (portIndex < PREFERRED_PORTS.length) {
+        PORT = PREFERRED_PORTS[portIndex];
+        // Crear un nuevo servidor con el nuevo puerto
+        server.close();
+        startServer();
+      } else {
+        console.error(`Error: Todos los puertos alternativos (${PREFERRED_PORTS.join(', ')}) están en uso.`);
+        console.error('Por favor, libere alguno de estos puertos o configure un puerto diferente en el archivo .env');
+        process.exit(1);
+      }
+    } else {
+      console.error(`Error al iniciar el servidor:`, error);
+      process.exit(1);
+    }
+  });
 
-// Iniciar servidor
-server.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
-  console.log(`WebSocket disponible en ws://localhost:${PORT}${process.env.WS_PATH || '/ws'}`);
-  console.log(`Modo: ${NODE_ENV}`);
-});
+  // Iniciar servidor
+  server.listen(PORT, () => {
+    console.log(`¡Servidor iniciado correctamente!`);
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    console.log(`WebSocket disponible en ws://localhost:${PORT}${process.env.WS_PATH || '/ws'}`);
+    console.log(`Modo: ${NODE_ENV}`);
+  });
+}
+
+// Iniciar el proceso de arranque del servidor
+startServer();
 

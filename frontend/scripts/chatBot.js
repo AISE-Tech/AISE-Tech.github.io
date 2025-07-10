@@ -3,8 +3,7 @@
  * Manages the chat interface functionality including message display, voice recognition,
  * and communication with the Gemini AI backend via WebSocket
  */
-class ChatBot {
-    constructor() {
+class ChatBot {    constructor() {
         // UI Elements
         this.form = document.getElementById('chatbot-form');
         this.input = document.getElementById('chatbot-input');
@@ -23,8 +22,10 @@ class ChatBot {
         this.socket = null;
         this.isConnected = false;
         this.reconnectAttempts = 0;
-        this.maxReconnectAttempts = 5;
-        this.reconnectDelay = 2000;
+        this.maxReconnectAttempts = 8;
+        this.reconnectDelay = 1500;
+        this.preferredPorts = [9001, 9002, 9003, 9004, 9005, 9000, 3000, 8080];
+        this.currentPortIndex = 0;
         
         // Conversation management
         this.clientId = null;
@@ -135,11 +136,36 @@ class ChatBot {
 
     /**
      * Connect to the WebSocket server
-     */    connectToWebSocket() {        // Determine the WebSocket URL based on the current page location        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const host = window.location.hostname === '' ? 'localhost:8888' : window.location.host;
+     */    connectToWebSocket() {
+        // Determine the WebSocket URL based on the current page location
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        let currentPort = '';
+        
+        if (window.location.hostname === '' || window.location.hostname === 'localhost') {
+            // Si estamos en desarrollo local, usamos uno de los puertos preferidos
+            const urlPort = new URLSearchParams(window.location.search).get('port');
+            
+            if (urlPort) {
+                // Si se especificó un puerto en la URL, usamos ese
+                currentPort = urlPort;
+            } else {
+                // Rotamos por los puertos preferidos
+                currentPort = this.preferredPorts[this.currentPortIndex];
+            }
+            
+            console.log(`Modo desarrollo: conectando a puerto ${currentPort} (intento #${this.currentPortIndex + 1})`);
+        } else {
+            // En producción, usamos el mismo puerto que el sitio web o uno de los puertos estándar
+            currentPort = window.location.port || this.preferredPorts[this.currentPortIndex];
+        }
+        
+        const host = window.location.hostname === '' ? `localhost:${currentPort}` : 
+                    (window.location.port ? window.location.host : `${window.location.hostname}:${currentPort}`);
+                    
         const wsUrl = `${protocol}//${host}/ws`;
         console.log('Intentando conectar al WebSocket en:', wsUrl);
         
+        // Crear la nueva conexión WebSocket
         this.socket = new WebSocket(wsUrl);
         
         // WebSocket event handlers
@@ -217,8 +243,7 @@ class ChatBot {
             console.error('Error al procesar mensaje del servidor:', error);
         }
     }
-    
-    /**
+      /**
      * Handle WebSocket connection close
      */
     handleSocketClose(event) {
@@ -228,34 +253,54 @@ class ChatBot {
         // Intentar reconectar
         if (this.reconnectAttempts < this.maxReconnectAttempts) {
             this.reconnectAttempts++;
-            const delay = this.reconnectDelay * this.reconnectAttempts;
-            console.log(`Intentando reconectar en ${delay/1000} segundos...`);
+            
+            // Rotar al siguiente puerto si estamos en local y hay un error de conexión
+            if (window.location.hostname === '' || window.location.hostname === 'localhost') {
+                this.currentPortIndex = (this.currentPortIndex + 1) % this.preferredPorts.length;
+            }
+            
+            const delay = this.reconnectDelay;
+            console.log(`Intentando reconectar en ${delay/1000} segundos (puerto: ${this.preferredPorts[this.currentPortIndex]})...`);
             
             setTimeout(() => {
                 this.connectToWebSocket();
             }, delay);
         } else {
-            this.showSystemMessage('No se pudo conectar al servidor. Por favor, recarga la página.');
+            this.showSystemMessage('No se pudo conectar al servidor después de varios intentos. Por favor, asegúrate de que el servidor esté funcionando y recarga la página.');
         }
     }
-      /**
+    
+    /**
      * Handle WebSocket error
-     */    handleSocketError(error) {
+     */
+    handleSocketError(error) {
         console.error('Error en la conexión WebSocket:', error);
-        this.showErrorMessage('Error de conexión al servidor. Intentando reconectar...');
         
         // Log connection details for debugging
         console.error('Detalles de conexión WebSocket:');
         console.error('- URL: ' + this.socket.url);
         console.error('- Estado actual: ' + this.socket.readyState);
         console.error('- Intentos de reconexión: ' + this.reconnectAttempts);
+        console.error('- Puerto actual: ' + this.preferredPorts[this.currentPortIndex]);
         
-        // Intentar reconectar automáticamente después de un tiempo
+        // Solo mostramos un mensaje de error al usuario después de varios intentos
+        if (this.reconnectAttempts > 2) {
+            this.showErrorMessage('Error de conexión al servidor. Intentando reconectar...');
+        }
+        
+        // Intentar reconectar automáticamente después de un tiempo, rotando puertos
         if (this.reconnectAttempts < this.maxReconnectAttempts) {
+            // Rotar al siguiente puerto en la lista
+            if (window.location.hostname === '' || window.location.hostname === 'localhost') {
+                this.currentPortIndex = (this.currentPortIndex + 1) % this.preferredPorts.length;
+            }
+            
+            const delay = Math.min(1000 + (500 * this.reconnectAttempts), 5000);
+            
             setTimeout(() => {
-                console.log(`Intento de reconexión ${this.reconnectAttempts + 1} de ${this.maxReconnectAttempts}`);
+                console.log(`Intento de reconexión ${this.reconnectAttempts + 1} de ${this.maxReconnectAttempts} - Puerto: ${this.preferredPorts[this.currentPortIndex]}`);
                 this.connectToWebSocket();
-            }, Math.min(1000 * Math.pow(2, this.reconnectAttempts), 30000)); // Backoff exponencial con máximo de 30 segundos
+            }, delay);
         }
     }
     
